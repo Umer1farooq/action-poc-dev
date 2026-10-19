@@ -1,0 +1,15 @@
+name: Module 2B - Scheduled Cron Workflow
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Added for instant manual testing fallback
+
+jobs:
+  cron-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Scheduled Task
+        run: |
+          echo "This job was triggered by a scheduled cron event or manual override."
+          echo "Current UTC Time: $(date)"
