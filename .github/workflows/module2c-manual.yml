@@ -1,0 +1,25 @@
+name: Module 2C - Manual Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      student_name:
+        description: 'Enter your full name'
+        required: true
+        default: 'DevOps Student'
+      environment:
+        description: 'Select deployment target'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  manual-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print User Inputs
+        run: |
+          echo "Student Name: ${{ github.event.inputs.student_name }}"
+          echo "Target Environment: ${{ github.event.inputs.environment }}"
