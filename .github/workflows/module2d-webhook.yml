@@ -1,0 +1,15 @@
+name: Module 2D - Repository Dispatch Webhook
+
+on:
+  repository_dispatch:
+    types: [custom-webhook]
+
+jobs:
+  webhook-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Handle Webhook Payload
+        run: |
+          echo "Webhook successfully received!"
+          echo "Action Type: ${{ github.event.action }}"
+          echo "Payload Data: ${{ toJson(github.event.client_payload) }}"
