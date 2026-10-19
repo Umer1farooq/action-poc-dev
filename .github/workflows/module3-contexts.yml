@@ -1,0 +1,32 @@
+name: Module 3 - Architecture & Contexts
+
+on: [push]
+
+jobs:
+  inspect-contexts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Print Core Context Objects
+        run: |
+          echo "=== GITHUB CONTEXT ==="
+          echo "Actor Username: ${{ github.actor }}"
+          echo "Repository Name: ${{ github.repository }}"
+          echo "Event Name: ${{ github.event_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+
+          echo "=== RUNNER CONTEXT ==="
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Runner Architecture: ${{ runner.arch }}"
+
+      - name: Conditional Execution - Main Branch Only
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          echo "This step runs ONLY if previous steps succeeded AND we are on the main branch."
+
+      - name: Always Run Cleanup Step
+        if: always()
+        run: |
+          echo "This step executes unconditionally, regardless of success or failure."
