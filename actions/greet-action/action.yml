@@ -1,0 +1,27 @@
+name: 'Custom Greet Action'
+description: 'A composite custom action that greets a user and displays environment details.'
+inputs:
+  username:
+    description: 'The name of the user to greet'
+    required: true
+    default: 'Developer'
+outputs:
+  greeting-message:
+    description: 'The full greeting message generated'
+    value: ${{ steps.greet.outputs.msg }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Print Greeting
+      id: greet
+      shell: bash
+      run: |
+        echo "Hello, ${{ inputs.username }}! Welcome to custom GitHub Actions."
+        echo "msg=Hello, ${{ inputs.username }}!" >> $GITHUB_OUTPUT
+
+    - name: Show Runner Info
+      shell: bash
+      run: |
+        echo "Running on OS: $RUNNER_OS"
+        echo "Execution architecture: $RUNNER_ARCH"
